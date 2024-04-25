@@ -1,0 +1,94 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-xl-10 offset-xl-1">
+            <div class="card rounded-3 text-black">
+                <div class="row g-0">
+                    <div class="col-lg-6">
+                        <div class="card-body p-md-5 mx-md-4">
+                            <div class="text-center mb-4">
+                                <img src="http://pngimg.com/uploads/cv/cv_PNG1.png" style="width: 185px;" alt="logo">
+                                <h4 class="mt-3">Log in to your account</h4>
+                            </div>
+
+                            <form id="account" method="post">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <label asp-for="Input.Email" class="form-label">Email</label>
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                                    <label asp-for="Input.Password" class="form-label">Password</label>
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                                    <label class="form-check-label" asp-for="Input.RememberMe">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                                </div>
+
+                                <div class="text-center">
+                                    <p><a id="forgot-password" href="#">Forgot your password?</a></p>
+                                    <p><a href="#">Register as a new user</a></p>
+                                    <p><a id="resend-confirmation" href="#">Resend email confirmation</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                        <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                            <h4 class="mb-4">We are more than just a company</h4>
+                            <p class="small mb-0">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .gradient-custom-2 {
+        background: #3fff00; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #3fff00, #61edb7, #76b852, #8DC26F); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #3fff00, #61edb7, #76b852, #8DC26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .h-100 {
+        height: 100vh;
+    }
+
+    .gradient-form {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .col-xl-10,
+    .card {
+        height: 100%;
+    }
+
+    .card {
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

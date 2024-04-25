@@ -1,0 +1,86 @@
+﻿@model List<FPTJob_1670.Models.Job>
+
+<h1>Job List</h1>
+
+<div class="row">
+    @foreach (var job in Model)
+    {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="@job.Image" alt="Job Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@job.Name</h5>
+                        <p class="card-text">@job.Title</p>
+                        <p class="card-text">Salary: @job.Salary</p>
+                        <p class="card-text">Application Deadline: @job.Application_Deadline.ToShortDateString()</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="btn btn-sm btn-outline-secondary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+</div>
+<style>
+    /* Định dạng card */
+    .card {
+        margin-bottom: 30px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Định dạng hình ảnh trong card */
+    .card-img-top {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    /* Định dạng tiêu đề của card */
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    /* Định dạng nút View Details */
+    .btn-outline-secondary {
+        color: #007bff;
+        border-color: #007bff;
+    }
+
+        /* Định dạng nút View Details khi rê chuột qua */
+        .btn-outline-secondary:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+    /* Định dạng các thông tin bổ sung */
+    .card-text {
+        margin-bottom: 5px;
+    }
+
+    /* Định dạng thẻ row */
+    .row {
+        margin-right: -15px;
+        margin-left: -15px;
+    }
+
+    /* Định dạng cột */
+    .col-md-4 {
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+
+    /* Định dạng chiều rộng của card */
+    .card {
+        width: 100%;
+    }
+
+    /* Định dạng đường viền của card */
+    .shadow-sm {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+
+</style>

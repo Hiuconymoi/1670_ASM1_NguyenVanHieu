@@ -1,0 +1,40 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityUser>
+@{
+    ViewData["Title"] = "Account Information";
+    Layout = "_AdminLayout";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a  asp-area="Identity" asp-page="/Account/Register" class="btn btn-success"> Create New Account</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@ViewBag.UserRoles[user.Id]</td>
+                    <td>@(user.LockoutEnd.HasValue && user.LockoutEnd > DateTime.Now ? "Locked" : "Active")</td>
+                    <td>
+                        <a asp-action="LockAccount" asp-route-id="@user.Id" class="btn btn-warning">Lock Account</a>
+                    </td>
+                    <td>
+                        <a asp-action="UnlockAccount" asp-route-id="@user.Id" class="btn btn-success">Unlock Account</a>
+                    </td>
+                    <td>
+                        <a asp-action="DeleteAccount" asp-route-id="@user.Id" class="btn btn-danger">Delete Account</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

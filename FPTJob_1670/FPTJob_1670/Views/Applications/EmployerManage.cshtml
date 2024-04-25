@@ -1,0 +1,39 @@
+﻿@model List<FPTJob_1670.Models.Application>
+
+<h1>Manage Applications</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Applicant Name</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var application in Model)
+        {
+            <tr>
+                <td>@application.Job.Title</td>
+                <td>@application.Seeker.Name</td>
+                <td>@application.statusApplication</td>
+                <td>
+                    @if (application.statusApplication == "Not Confirmed")
+                    {
+                        
+                        <form asp-action="AcceptApplication" method="post" style="display: inline;">
+                            <input type="hidden" name="id" value="@application.Id" />
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+                        <form asp-action="RejectApplication" method="post" style="display: inline;">
+                            <input type="hidden" name="id" value="@application.Id" />
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                        
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

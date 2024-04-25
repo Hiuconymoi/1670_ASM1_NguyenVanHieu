@@ -1,0 +1,268 @@
+﻿@model IEnumerable<FPTJob_1670.Models.Notification>
+
+    @{
+        ViewData["Title"] = "Notifications";
+    }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <div class="container" style="margin-top: 50px; min-height: 90vh">
+        <main role="main" class="container">
+            <h2>Notifications</h2>
+            <div id="notificationList" class="row">
+                @foreach (var notification in Model.OrderByDescending(n => !n.IsRead))
+                {
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-dark">
+                                @if (notification.IsRead)
+                                {
+                                    <span class="badge badge-success">Read</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning">Unread</span>
+                                }
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Notification</h5>
+                                <p class="card-text">@notification.Message</p>
+                                <span class="float-right">
+                                <a asp-action="Delete" asp-route-id="@notification.Id" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                                |
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.11/signalr.min.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+
+    connection.start().then(function () {
+        console.log("SignalR Connected");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("ReceiveNotification", function (message) {
+        console.log("New notification received:", message);
+        var notificationList = document.getElementById("notificationList");
+        var listItem = document.createElement("div");
+        listItem.className = "col-md-6";
+        listItem.innerHTML = `
+                        <div class="card mb-3">
+                            <div class="card-header bg-dark">
+                                <span class="badge badge-warning">Unread</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Notification</h5>
+                                <p class="card-text">${message}</p>
+                                <span class="float-right">
+                                        <a asp-action="Delete" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </a>
+ 
+                                </span>
+                            </div>
+                        </div>`;
+        notificationList.insertBefore(listItem, notificationList.firstChild);
+    });
+
+</script>
+<style>
+/* Định dạng thẻ body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Định dạng thẻ .card */
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
+
+/* Định dạng thẻ .card-header */
+.card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #343a40;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    color: #fff;
+}
+
+/* Định dạng thẻ .card-body */
+.card-body {
+    padding: 1.25rem;
+}
+
+/* Định dạng thẻ .badge */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.25em 0.4em;
+    border-radius: 0.25rem;
+}
+
+/* Định dạng màu của thẻ .badge-warning */
+.badge-warning {
+    background-color: #ffc107;
+}
+
+/* Định dạng màu của thẻ .badge-success */
+.badge-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Định dạng các nút */
+.btn {
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+}
+
+/* Định dạng nút màu xanh (.btn-primary) */
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* Định dạng nút màu xám (.btn-secondary) */
+.btn-secondary {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Định dạng nút màu xanh lá (.btn-success) */
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+/* Định dạng nút màu đỏ (.btn-danger) */
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Định dạng nút màu xám nhạt (.btn-light) */
+.btn-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+/* Định dạng nút màu đen (.btn-dark) */
+.btn-dark {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+
+/* Định dạng nút màu xám nhạt (.btn-outline-secondary) */
+.btn-outline-secondary {
+    color: #6c757d;
+    background-color: transparent;
+    background-image: none;
+    border-color: #6c757d;
+}
+
+/* Định dạng nút màu xanh lá nhạt (.btn-outline-success) */
+.btn-outline-success {
+    color: #28a745;
+    background-color: transparent;
+    background-image: none;
+    border-color: #28a745;
+}
+
+/* Định dạng nút màu đỏ nhạt (.btn-outline-danger) */
+.btn-outline-danger {
+    color: #dc3545;
+    background-color: transparent;
+    background-image: none;
+    border-color: #dc3545;
+}
+
+/* Định dạng các nút khi rê chuột qua */
+.btn:hover {
+    text-decoration: none;
+}
+
+/* Định dạng phần đuôi trang */
+footer {
+    padding: 1rem;
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+}
+
+/* Định dạng nội dung container */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Định dạng tiêu đề */
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+/* Định dạng dòng chữ */
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+/* Định dạng vị trí phần float */
+.float-right {
+    float: right !important;
+}
+
+/* Định dạng khung */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+/* Định dạng cột */
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+}
+
+
+    /* Định dạng icon */
+    .fa-trash-alt {
+        margin-right: 0.5rem;
+    }
+
+    /* Định dạng nút Delete */
+    .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.25rem;
+        font-size: 0.875rem;
+        display: inline-flex;
+        align-items: center;
+    }
+</style>
+

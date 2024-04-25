@@ -1,0 +1,213 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #8DC26F;
+            background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
+            background: -moz-linear-gradient(to top, #76b852, #8DC26F);
+            background: -o-linear-gradient(to top, #76b852, #8DC26F);
+            background: linear-gradient(to top, #76b852, #8DC26F);
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrapper {
+            margin-top: 50px;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.18);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 0 auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+
+            .wrapper h1 {
+                text-align: center;
+                color: #fff;
+                font-weight: 100;
+                margin-bottom: 30px;
+            }
+
+        .form-control {
+            border: none;
+            border-radius: 0;
+            background: rgba(255, 255, 255, 0.37);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            color: #000;
+            font-weight: 100;
+            box-shadow: none;
+        }
+
+            .form-control:focus {
+                background: rgba(255, 255, 255, 0.7);
+                box-shadow: none;
+                color: #fff;
+            }
+
+        label {
+            font-weight: 100;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .checkbox label {
+            color: #fff;
+            font-weight: 300;
+        }
+
+            .checkbox label input[type="checkbox"] {
+                display: none;
+            }
+
+                .checkbox label input[type="checkbox"] + span {
+                    position: relative;
+                    padding-left: 35px;
+                    cursor: pointer;
+                }
+
+                    .checkbox label input[type="checkbox"] + span:before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 2px;
+                        width: 20px;
+                        height: 20px;
+                        border: 1px solid #fff;
+                    }
+
+                    .checkbox label input[type="checkbox"] + span:after {
+                        content: '';
+                        position: absolute;
+                        left: 6px;
+                        top: 7px;
+                        width: 10px;
+                        height: 5px;
+                        border: solid #fff;
+                        border-width: 0 3px 3px 0;
+                        transform: rotate(45deg);
+                        display: none;
+                    }
+
+                .checkbox label input[type="checkbox"]:checked + span:before {
+                    background: #fff;
+                }
+
+                .checkbox label input[type="checkbox"]:checked + span:after {
+                    display: block;
+                }
+
+        .btn-primary {
+            background: #76b852;
+            border: none;
+            border-radius: 4px;
+            padding: 15px 20px;
+            color: #fff;
+            font-weight: 100;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background: #8DC26F;
+            }
+
+        .form-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+            .form-links a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: 300;
+                transition: color 0.3s ease;
+            }
+
+                .form-links a:hover {
+                    color: #76b852;
+                }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Register</h1>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Input.UserName" class="form-label">User Name</label>
+                <input asp-for="Input.UserName" class="form-control" autocomplete="username" required />
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email" class="form-label">Email</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" required />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password" class="form-label">Password</label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" required />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" required />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
+                <input asp-for="Input.PhoneNumber" class="form-control" required />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Role" class="form-label">Role</label>
+                <select asp-for="Input.Role" class="form-select" asp-items="Model.Input.RoleList" required>
+                    <option value="">-- Choose a role --</option>
+                </select>
+                <span asp-validation-for="Input.Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" class="checkbox" required="">
+                        <span>I Agree To The Terms & Conditions</span>
+                    </label>
+                </div>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <div class="form-links">
+            <p>Already have an Account? <a href="#">Login Now!</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
+<br />
+<br />
+<br />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
